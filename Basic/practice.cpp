@@ -1,19 +1,53 @@
 #include <iostream>
-
+#include <stack>
+#include <string>
 using namespace std;
+int main() {
+   stack<char> a, b;
+   string s;
+   int T;
+   cin >> T;
+   for (int j = 0; j < T; j++) {
+      cin >> s;
+      for (int i = 0; i < s.length(); i++) {
+         if (s[i] == '<') {
+            if (a.empty()) continue;
+            else {
+               b.push(a.top());
+               a.pop();
+            }
+         }
+         else if (s[i] == '>') {
+            if (b.empty()) continue;
+            else {
+               a.push(b.top());
+               b.pop();
+            }
+         }
+         else if (s[i] == '-') {
+            if (a.empty()) continue;
+            else a.pop();
+         }
+         else {
+            a.push(s[i]);
 
-int main(void) {
-  ios::sync_with_stdio(0);
-  cin.tie(0);
-const int numStudents = 5;
-int scores[numStudents] ={92,99,96,89,91};
-int maxScore = 0;
-for(auto &score: scores)
-    if(maxScore < score)
-    maxScore = score;
-
-cout<<"The best score is " << maxScore << "\n";
-
-return 0;
-  system("pause");
+         }
+      }
+      if (!b.empty()) {
+         while (!b.empty()) {
+            a.push(b.top());
+            b.pop();
+         }
+      }
+      while (!a.empty()) {
+         b.push(a.top());
+         a.pop();
+      }
+      while (!b.empty()) {
+         cout << b.top();
+         b.pop();
+      }
+      cout << "\n";
+   }
+   return 0;
 }
