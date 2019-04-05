@@ -5,7 +5,11 @@
         "list": "cpp",
         "ios": "cpp",
         "stack": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "algorithm": "cpp",
+        "xiosbase": "cpp",
+        "iosfwd": "cpp",
+        "ostream": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
