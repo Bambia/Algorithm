@@ -1,75 +1,127 @@
-#include<iostream>
-#include<algorithm>
-#include<vector>
-#include<utility>
+#include <iostream>
+#include <queue>
 
 using namespace std;
-const int MAX = 12;
 
-pair<int,int> pairArr[MAX][MAX];
-int costMap[MAX][MAX]={0,};
-int map[MAX][MAX]={0,};
-int N=0;
-int arr[MAX]={0,};
-vector <int> village;
-int visited[MAX] ={0,};
+int N,S,M,K;
+int arr[21]={0,};
+int visited[21]={0,};
+int a[21][21];
 
+int ans=0;
+//int MAX=;
 
-void dfs(int start){
-    if(visited[start]==1)return;
-    visited[start]=1;
-    
-    if(start==N){
-         for(int i=0; i<N; i++){
-                cout << arr[i]<<' ';
-         }
-         cout << '\n';
-    }
-    
-    for(int i=0; i<N; i++){
-        if((map[start][i]==1)&&(!visited[i])){
-            visited[i]=1;
-            arr[start]=village[i];
-            //cout <<arr[start]<<' ';
-            dfs(start+1);
-            visited[i]=0;
+    void bfs(int pos){
+        
+        queue<int> q;
+        q.push(pos);
+        visited[pos] =1;
+
+        while(!q.empty()){
+
+            pos = q.front();
+            q.pop();
+            cout << pos<<' ';
+
+            B=pos+1;
+            q.push(B);
+
+            B=pos-1;
+            q.push(B);
+
+            B=pos*2;
+            q.push(B);
+
+            ==q.front();
+
+            for(int i=1; i<3; i++){
+                if(a[pos][i]==1 && visited[i]==0){
+                    visited[i]=1;
+                    q.push(i);
+                }
+            }
         }
-    }
-    
-     
-}
 
+    
+    
+    }
 int main(void){
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    
-    cin >> N;
-    for(int i=0; i<N; i++){
-        for(int j=0; j<N; j++){
-             cin >> costMap[i][j];
-             if(costMap[i][j]!=0){
-                 map[i][j] = 1;
-             }
-        }
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int x,y;
+    cin >> N >> K;
+    /*
+    for(int i=0; i<M; i++){
+        cin >> x>>y;
+        a[x][y] =1;
+        a[y][x] =1;
     }
-    for(int i=0; i<N; i++){
-        village.push_back(i+1);
-    }
-    cout << "village:";
-    for(int i=0; i<N; i++){
-        cout << village[i];
-    }
-    cout <<'\n';
-    for(int i=0; i<N; i++){
-        for(int j=0; j<N; j++){
-             cout << map[i][j]<<' ';
+
+    for(int i=0; i<N+1; i++){
+        for(int j=0; j<N+1; j++){
+            cout << a[i][j]<<' ';
         }
         cout <<'\n';
     }
-    cout <<'\n';
-        dfs(0);
+    bfs(N);
     
+    return 0;
+}
 
+#include <iostream>
+#include <queue>
 
+using namespace std;
+
+int N,S,K,M;
+int arr[21]={0,};
+int visited[21]={0,};
+int a[21][21];
+
+int ans=0;
+//int MAX=;
+
+    void dfs(int pos){
+        
+        queue<int> q;
+        q.push(pos);
+        visited[pos] =1;
+
+        while(!q.empty()){
+
+            pos = q.front();
+            q.pop();
+            cout << pos<<' ';
+
+            for(int i=1; i<N+1; i++){
+                if(a[pos][i]=1 && visited[i]==0){
+                    visited[i]=1;
+                    q.push(i);
+                }
+            }
+        }
+
+    
+    
+    }
+int main(void){
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+    int x,y;
+    cin >> N >>M>> K;
+    for(int i=0; i<N; i++){
+        cin >> x>>y;
+        a[x][y] =1;
+        a[y][x] =1;
+    }
+
+    for(int i=0; i<N+1; i++){
+        for(int j=0; j<N+1; j++){
+            cout << a[i][j]<<' ';
+        }
+        cout <<'\n';
+    }
+    dfs(1);
+    
     return 0;
 }
