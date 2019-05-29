@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#include <math.h>
 
 struct point{
     int x,y;
@@ -13,7 +12,7 @@ point castle[16];
 using namespace std;
 
 int N,M,D;
-vector <int> Archer; 
+int Archer[3]; 
 int map[16][16],cmap[16][16];
 vector <point> enemy;
 
@@ -47,124 +46,6 @@ bool updateMap(){
         else return false;
     
 }
-
-void dfs(int idx){
-
-    if( Archer.size() == 3){  
-
-        for(int i=0; i<Archer.size(); i++){
-            cout<<" Position of archer: " << Archer[i]<<' ';
-        }
-        cout <<'\n'; 
-
-        for(int i=0; i<N; i++){
-            for(int j=0; j<M; j++){
-                cmap[i][j]=map[i][j]; 
-            }
-        }
-
-        int isupdate =1;
-
-        while( isupdate ) {
-
-            isupdate=0;
-            for(int i=0; i<3; i++){ 
-                    point arc,a;
-                    int end=0;
-                    arc.x = castle[Archer[i]].x;
-                    arc.y = castle[Archer[i]].y;
-                    a.x = 100;
-                    a.y = -1;
-                    //arc.dist = 0;
-                    cout << "archer start search x:"<<arc.x<<" y:"<<arc.y<<'\n';
-                    for(int j=N-1; j>=0; j--){ //1명의 궁수가 적을 찾는 탐색 
-                        
-                        for(int k=0; k<M; k++){
-
-                            //cout <<"finding! x:"<<k<<" y:"<<j<<'\n';
-
-                            if(cmap[j][k] ==1 && ( abs(arc.x - k)+ abs(arc.y-j) <=D ) ){ //적이 있으면
-                                cout <<"find anenmy! x:"<<k<<" y:"<<j<<'\n';
-                                if(a.x > k ){
-                                    a.x = k;
-                                    a.y = j;
-                                    end=1;
-                                }
-                            }
-
-
-                            //궁수가 거리 D 이상 탐색하면 종료
-                        }
-                        
-                    }
-                    if(end) enemy.push_back(a); 
-
-            }
-            int size = (enemy.size()-1);
-            
-            for(int i=size; i>=0; i--){
-                
-                if(cmap[enemy[i].y][enemy[i].x]==1) {
-                    killcnt++;
-                    cout <<"kill anenmy! x:"<<enemy[i].x<<" y:"<<enemy[i].y<<'\n';
-                } 
-                cmap[enemy[i].y][enemy[i].x] =0; 
-                
-                enemy.pop_back();
-                
-            }
-            total += killcnt;
-            killcnt=0;
-
-        for(int i=0; i<N; i++){ // 1명의 궁수가 죽이고 나면
-            for(int j=0; j<M; j++){
-                cout << cmap[i][j]<<' ';
-            }
-            cout <<'\n';
-        }
-
-            if(!updateMap()) isupdate = 0; 
-            else isupdate =1;     
-        }
-        if (total> max_kill) max_kill = total;
-
-
-        cout <<"the combination of archer finish. total kill num :"<<total <<'\n';
-        cout <<"max_kill num :"<<max_kill <<'\n';
-
-        total =0;
-        return;
-    }
-
-    for(int i=idx; i<M; i++){
-        
-        Archer.push_back(i);
-        dfs(i+1);
-        Archer.pop_back();
-    }
-}
-
-int main(void){
-    
-    cin >> N >> M >> D;
-    for(int i=0; i<N; i++){
-        for(int j=0; j<M; j++){
-            cin >> map[i][j];
-            castle[j].x = j; 
-            castle[j].y = N; 
-        }
-    }
-
-    dfs(0);
-    cout <<max_kill;
-
-    return 0;
-}
-
-  
-
-  /*
-
 void bfs(struct point pos){ 
     queue <point> q;
     
@@ -203,4 +84,71 @@ void bfs(struct point pos){
         }
     }
 }
-  */
+void dfs(int idx){
+    
+    for (int i=0; i<M; i++) {
+        for (int j=i+1; j<M; j++) {
+            for (int k=j+1; k<M; k++) {
+                Archer[0] = i, Archer[1] = j, Archer[2] = k;
+
+                for(int i=0; i<N; i++){
+                    for(int j=0; j<M; j++){
+                        cmap[i][j]=map[i][j]; 
+                    }
+                }
+                int isupdate =1;
+
+                while( isupdate ) {
+
+                    isupdate=0;
+                    for(int i=0; i<3; i++){ 
+                            castle[Archer[i]].dist =0; 
+                                
+                            bfs(castle[Archer[i]]); 
+                    }
+                    int size = (enemy.size()-1);
+                        
+                    for(int i=size; i>=0; i--){
+                            
+                        if(cmap[enemy[i].y][enemy[i].x]==1) killcnt++; 
+                            cmap[enemy[i].y][enemy[i].x] =0; 
+                            
+                            enemy.pop_back();    
+                        }
+                        total += killcnt;
+                        killcnt=0;
+
+                        if(!updateMap()) isupdate = 0; 
+                        else isupdate =1;     
+                    }
+                if (total> max_kill) max_kill = total;
+
+                total =0;
+            }
+        }
+    }
+
+    
+
+}
+
+int main(void){
+    
+    cin >> N >> M >> D;
+    for(int i=0; i<N; i++){
+        for(int j=0; j<M; j++){
+            cin >> map[i][j];
+            castle[j].x = j; 
+            castle[j].y = N; 
+        }
+    }
+
+    
+
+
+    cout <<max_kill;
+
+    return 0;
+}
+
+  
