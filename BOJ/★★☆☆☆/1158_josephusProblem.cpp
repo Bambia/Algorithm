@@ -36,7 +36,7 @@ int main(void){
         for(int i=0; i<k-1; i++) {
             t++;
             if(t==L.end()){
-                t=L.begin();
+                t=L.begin(); //t 가 마지막 원소 다음을 가리키면 처음으로 돌아감
             }
         }
         //josephus[j] =*t;
@@ -44,7 +44,7 @@ int main(void){
         if(j!=n-1) cout<< ", "; 
 
         t=L.erase(t);
-        if(t==L.end()) t=L.begin();
+        if(t==L.end()) t=L.begin(); //마지막원소를 제거하면 처음으로 돌아감
 
           
     }

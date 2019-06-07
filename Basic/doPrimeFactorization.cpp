@@ -11,16 +11,21 @@ int p[20];
 
 int main(){
     int N,cnt=0;
-    int finish=0,prime =0,error=0;
     cin >> N;
-
-    while(!finish){
-        
-        
+    do{
+        if(N>=2){
+        int i=2;    
+            for(; i<=N; i++) if(N%i == 0) break;
+            p[cnt] = i;
+            cnt ++;
+            N/= i;
+        }
+        else return 0; 
     }
-    if() {
-        cout << "prime number\n";
-           
+    while(N!=1);
+        
+    if(cnt ==1) {
+        cout << "prime number\n";  
     }
     else {
         
