@@ -46,7 +46,7 @@ void dfs(int pos){
     if(check[pos] ==1 ) return;
     cout << pos <<' ';
     check[pos] =1;
- 
+    
     //adjacent matrix ver.
     /*for(int i=1; i<=N; i++){
         if(adj_matrix[pos][i]==1){
