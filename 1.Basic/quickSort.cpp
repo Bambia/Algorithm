@@ -45,6 +45,9 @@ int main(){
 	}
 	_sort(arr, arr+n, cmp);
 	for(int i=0;i<n;i++)
-		printf("%d \n", arr[i]);
+		printf("%d ", arr[i]);
 	return 0;
 }
+
+5 
+66 5 32 11 1

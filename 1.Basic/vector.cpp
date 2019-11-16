@@ -3,29 +3,35 @@
 using namespace std;
 
 template <class T>
-class _vector{
+class Vector{
     public:
-        int _size;
-        int capacity;
+        int _size, _capacity;
         T *arr;
-        _vector(){
+        Vector(){
             _size = 0;
-            capacity = 32;
-            arr = new T[capacity];
+            _capacity = 32;
+            arr = new T[_capacity];
         }
-        _vector(int k){
+        Vector(int k){
             _size = k;
-            capacity = k;
-            arr = new T[capacity];
+            _capacity = k;
+            arr = new T[_size];
         }
-        ~_vector(){
+        Vector(int k, int val){
+            _size = _capacity = k;
+            arr = new T[_size];
+            for(register int i =0; i<_size; i++){
+                arr[i] = val;
+            }
+        }
+        ~Vector(){
             delete[] arr;
         }
         void clear(){
             delete[] arr;
             _size =0;
-            capacity =32;
-            arr = new T[capacity];
+            _capacity =32;
+            arr = new T[_capacity];
         }
         void resize(int k){
             T *temp;
@@ -34,7 +40,7 @@ class _vector{
                 temp[i] = arr[i];
             delete[] arr;
             arr = temp;
-            _size =capacity = k;
+            _capacity = k;
         }
         int size() const{
             return _size;
@@ -46,9 +52,8 @@ class _vector{
             return &arr[0]+ _size;
         }
         void push_back(T val){
-            if(_size == capacity){
+            if(_size == _capacity){
                 resize(_size*2);
-                _size /=2;
             }
             arr[_size++] = val;
         }
@@ -64,9 +69,21 @@ class _vector{
 };
 int main(){
     int N,arr[500];
-    vector <int> v;
+    vector <int> v(32,-1);
     cin>> N;
-
-
+    for(int i =0; i<v.size(); i++) cout << v[i]<< ' ';
+    cout <<'\n';
+    
+    for(int i=0; i < N; i++) {
+        int arr;
+        cin >> arr ;
+        v.push_back(arr);
+    
+    }
+    for(int i =0; i<v.size(); i++) cout << v[i]<< ' ';
+    cout <<'\n';
+      
+    
+    
     return 0;
 }
